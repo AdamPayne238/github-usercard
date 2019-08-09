@@ -12,27 +12,13 @@ axios.get('https://api.github.com/users/AdamPayne238')
     .catch((err) => {
         console.log(err);
       })
-      
+
     let entryPoint = document.querySelector('.cards')
-    
-    // let entryPoint = document.querySelector('.entry')
 
 // Step Three: talk about HTTP, requesting data from a server, and axios
 // Write the code to request data from this address (or whatever breed you want :) ) 
 // console.log the response and inspect it in the console, note that the response data is going to be different for every server.
 // move onto step 4 with the response data in mind. 
-
-// axios.get('https://dog.ceo/api/breed/mastiff/images/random/12')
-//   .then((response) => {
-//   console.log(response);
-//   response.data.message.forEach( item => {
-//     let newDog = DogCard(item)
-//     entryPoint.appendChild(newDog)
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -54,13 +40,7 @@ axios.get('https://api.github.com/users/AdamPayne238')
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
+
 
 const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
@@ -75,14 +55,6 @@ followersArray.forEach(i => {
     })
   })
 
-//break
-
-//Classes
-
-//card
-//card-info
-//name
-//username
 
 function gitCard(data){
 
@@ -119,10 +91,9 @@ function gitCard(data){
   newInfo.appendChild(newLocation);
 
   newInfo.appendChild(newProfile);
-  newProfile.textContent = `Profile: `;
+  newProfile.textContent =  `Profile: ${data.html_url}`;
   newProfile.appendChild(newA);
 
-  newA.setAttribute('href', `${data.html_url}`);
   newInfo.appendChild(newFollowers);
   newInfo.appendChild(newFollowing);
   newInfo.appendChild(newBio);
@@ -144,9 +115,9 @@ function gitCard(data){
   newUserName.textContent = data.login;
   newLocation.textContent = data.location;
   
-  newFollowers.textContent = `Followers: ${data.newFollowers}`;
-  newFollowing.textContent = `Following: ${data.newFollowing}`;
-  newBio.textContent = `Bio: ${data.newBio}`;
+  newFollowers.textContent = `Followers: ${data.followers}`;
+  newFollowing.textContent = `Following: ${data.following}`;
+  newBio.textContent = `Bio: ${data.bio}`;
 
   return newCard
 
