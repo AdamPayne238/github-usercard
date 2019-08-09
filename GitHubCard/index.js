@@ -2,22 +2,19 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+
+axios.get('https://api.github.com/users/AdamPayne238')
+    .then((response) => {
+        console.log(response.data);
+        const aNewCard = gitCard(response.data)
+        entryPoint.appendChild(aNewCard)
+        })
+    .catch((err) => {
+        console.log(err);
+      })
+      
+    let entryPoint = document.querySelector('.cards')
     
-// let entryPoint = document.querySelector('data')
-
-// axios.get('https://api.github.com/users/AdamPayne238')
-//     .then((response) => {
-//         console.log(response);
-//         response.data.data.forEach( item => {
-//         let newCard = gitCard(item)
-//         entryPoint.appendChild(newCard)
-//         })
-//     .catch((err) => {
-//         console.log(err);
-//       })
-//     })
-
-
     // let entryPoint = document.querySelector('.entry')
 
 // Step Three: talk about HTTP, requesting data from a server, and axios
@@ -64,7 +61,19 @@
   luishrd
   bigknell
 */
-const followersArray = ["https://api.github.com/users/tetondan", "https://api.github.com/users/dustinmyers", "https://api.github.com/users/justsml", "https://api.github.com/users/luishrd", "https://api.github.com/users/bigknell"];
+
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach(i => {
+    axios.get('https://api.github.com/users/' + [i])
+    .then((response) => {
+      const aNewCard = gitCard(response.data)
+      entryPoint.appendChild(aNewCard)
+      })
+  .catch((err) => {
+      console.log(err);
+    })
+  })
 
 //break
 
@@ -75,14 +84,14 @@ const followersArray = ["https://api.github.com/users/tetondan", "https://api.gi
 //name
 //username
 
-function gitCard(gitHub){
+function gitCard(data){
 
   //Define Element
   //Card
   let newCard = document.createElement('div');
-  //Image {image url of user}
+
+  //Image
   let newImage = document.createElement('img');
-  // newImage.src = "https://avatars1.githubusercontent.com/u/52122395?v=4";
   //Card Info
   let newInfo = document.createElement('div');
   //Name {users name}
@@ -93,78 +102,56 @@ function gitCard(gitHub){
   let newLocation = document.createElement('p');
   //Profile
   let newProfile = document.createElement('p');
-  // newProfile.src = "https://github.com/AdamPayne238";
   //Followers
   let newFollowers = document.createElement('p');
-  // newFollowers.src = "https://api.github.com/users/AdamPayne238/followers";
   //Following
   let newFollowing = document.createElement('p');
-  // newFollowing.src = "https://api.github.com/users/AdamPayne238/following{/other_user}";
+
   //Bio {users bio}
   let newBio = document.createElement('p');
-  //newBio.src = "Student";
+  let newA = document.createElement('a');
 
   //Set Structure of Elements (appendChild)
   newCard.appendChild(newImage);
   newCard.appendChild(newInfo);
-  newCard.appendChild(newName);
-  newCard.appendChild(newUserName);
-  newCard.appendChild(newLocation);
-  newCard.appendChild(newProfile);
-  newCard.appendChild(newFollowers);
-  newCard.appendChild(newFollowing);
-  newCard.appendChild(newBio);
+  newInfo.appendChild(newName);
+  newInfo.appendChild(newUserName);
+  newInfo.appendChild(newLocation);
+
+  newInfo.appendChild(newProfile);
+  newProfile.textContent = `Profile: `;
+  newProfile.appendChild(newA);
+
+  newA.setAttribute('href', `${data.html_url}`);
+  newInfo.appendChild(newFollowers);
+  newInfo.appendChild(newFollowing);
+  newInfo.appendChild(newBio);
 
   //Set Class
   //Card
-  newCard.classList.add('.card');
+  newCard.classList.add('card');
   //Card Info
-  newInfo.classList.add('.card-info');
+  newInfo.classList.add('card-info');
   //Name
-  newName.classList.add('.name');
+  newName.classList.add('name');
   //UserName
-  newUserName.classList.add('.username');
+  newUserName.classList.add('username');
 
   //Set Content
-  newImage.textContent = imgUrl;
-  newInfo.textContent = imgUrl;
-  newName.textContent = imgUrl;
-  newUserName.textContent = imgUrl;
-  newLocation.textContent = gitHub.location;
-  newProfile.textContent = `${gitHub.html_url}`;
-  newFollowers.textContent = `Followers: ${gitHub.newFollowers}`;
-  newFollowing.textContent = `Following: ${gitHub.newFollowing}`;
-  newBio.textContent = `Bio: ${gitHub.newio}`;
+  newImage.setAttribute('src', data.avatar_url);
+  // newInfo.textContent =  ;
+  newName.textContent = `${data.name}`;
+  newUserName.textContent = data.login;
+  newLocation.textContent = data.location;
+  
+  newFollowers.textContent = `Followers: ${data.newFollowers}`;
+  newFollowing.textContent = `Following: ${data.newFollowing}`;
+  newBio.textContent = `Bio: ${data.newBio}`;
 
-  return newCard;
+  return newCard
 
 }
 
-let entryPoint = document.querySelector('data')
-
-axios.get('https://api.github.com/users/AdamPayne238')
-    .then((response) => {
-        console.log(response)
-        response.data.data.forEach(item => {
-          let newCard = gitCard(item)
-          entryPoint.appendChild(newCard)
-        })
-    .catch((err) => {
-        console.log(err);
-      })
-    })
-
-//       axios.get('https://dog.ceo/api/breed/mastiff/images/random/12')
-//   .then((response) => {
-//   console.log(response);
-//   response.data.message.forEach( item => {
-//     let newDog = DogCard(item)
-//     entryPoint.appendChild(newDog)
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// })
 
 
 
